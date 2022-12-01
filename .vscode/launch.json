@@ -12,11 +12,12 @@
         "<node_internals>/**"
       ],
       "runtimeArgs": [
-        "-r",
-        "ts-node/register"
+        "--loader",
+        "ts-node/esm",
+        "--experimental-specifier-resolution=node"
       ],
       "args": [
-        "${workspaceFolder}/index.ts"
+        "${workspaceFolder}/src/index.ts"
       ]
     }
   ]
