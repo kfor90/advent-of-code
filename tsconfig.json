@@ -1,0 +1,17 @@
+{
+  "extends": "@tsconfig/esm/tsconfig.json",
+  "compilerOptions": {
+    "lib": ["es2022"],
+    "target": "es2022",
+    "moduleResolution": "nodenext",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": ["*.ts"],
+  "exclude": ["./dist/**/*", "node_modules"]
+}
