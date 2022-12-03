@@ -1,3 +1,3 @@
-import { handler as day1 } from './day-1/index.js';
+import { main as day1 } from './day-1/index.js';
 
-day1();
+console.log(await day1());
