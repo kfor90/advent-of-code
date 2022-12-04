@@ -1,11 +1,11 @@
-import * as fs from "node:fs";
-import { dirname, resolve } from "node:path";
-import * as readline from "node:readline";
-import { fileURLToPath } from "node:url";
+import * as fs from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import * as readline from 'node:readline';
+import { fileURLToPath } from 'node:url';
 
 const getFileIterator = () => {
   const __dirname = dirname(fileURLToPath(import.meta.url));
-  const filePath = resolve(__dirname, "input.txt");
+  const filePath = resolve(__dirname, 'input.txt');
 
   const fileStream = fs.createReadStream(filePath);
   const rl = readline.createInterface({
@@ -15,10 +15,7 @@ const getFileIterator = () => {
   return rl;
 };
 
-const elfHasMoreCaloriesThanTopElves = (
-  elfCalories: number,
-  caloriesByTopElves: number[]
-) => {
+const elfHasMoreCaloriesThanTopElves = (elfCalories: number, caloriesByTopElves: number[]) => {
   return elfCalories > caloriesByTopElves[0];
 };
 
@@ -43,9 +40,7 @@ const calcMostCaloriesByAnElf = async () => {
     // count calories for the current elf
     if (!isEndOfElf(line)) currentElfCalories += parseInt(line);
     // Current elf has more calories than the leader
-    else if (
-      elfHasMoreCaloriesThanLeader(currentElfCalories, mostCaloriesByElf)
-    ) {
+    else if (elfHasMoreCaloriesThanLeader(currentElfCalories, mostCaloriesByElf)) {
       mostCaloriesByElf = currentElfCalories;
       currentElfCalories = 0;
     }
@@ -67,9 +62,7 @@ const calcMostCaloriesByTopElves = async (numTopElves: number) => {
     // count calories for the current elf
     if (!isEndOfElf(line)) currentElfCalories += parseInt(line);
     // top elves group is not full, add current elf to the group
-    else if (
-      !isTopElvesGroupFull(totalCaloriesByTopElves.length, numTopElves)
-    ) {
+    else if (!isTopElvesGroupFull(totalCaloriesByTopElves.length, numTopElves)) {
       totalCaloriesByTopElves.push(currentElfCalories);
       currentElfCalories = 0;
 
@@ -79,12 +72,7 @@ const calcMostCaloriesByTopElves = async (numTopElves: number) => {
     }
 
     // Current elf has more calories than someone in the top numTopElves
-    else if (
-      elfHasMoreCaloriesThanTopElves(
-        currentElfCalories,
-        totalCaloriesByTopElves
-      )
-    ) {
+    else if (elfHasMoreCaloriesThanTopElves(currentElfCalories, totalCaloriesByTopElves)) {
       // replace worst elf from the array with current elf
       totalCaloriesByTopElves[0] = currentElfCalories;
 
@@ -100,10 +88,7 @@ const calcMostCaloriesByTopElves = async (numTopElves: number) => {
   }
 
   // sum the contents of the array
-  return totalCaloriesByTopElves.reduce(
-    (previous, current) => previous + current,
-    0
-  );
+  return totalCaloriesByTopElves.reduce((previous, current) => previous + current, 0);
 };
 
 export const part1 = () => {
