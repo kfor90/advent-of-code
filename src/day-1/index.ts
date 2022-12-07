@@ -1,5 +1,7 @@
 import { getFileIterator } from '../shared/index.js';
 
+const INPUT_FILE_PATH = 'day-1/input.txt';
+
 const elfHasMoreCaloriesThanTopElves = (elfCalories: number, caloriesByTopElves: number[]) => {
   return elfCalories > caloriesByTopElves[0];
 };
@@ -19,7 +21,7 @@ const isEndOfElf = (line: string) => {
 const calcMostCaloriesByAnElf = async () => {
   let mostCaloriesByElf = 0;
   let currentElfCalories = 0;
-  const fileIterator = getFileIterator('day-1/input.txt');
+  const fileIterator = getFileIterator(INPUT_FILE_PATH);
 
   for await (const line of fileIterator) {
     // count calories for the current elf
@@ -41,7 +43,7 @@ const calcMostCaloriesByTopElves = async (numTopElves: number) => {
   const totalCaloriesByTopElves: number[] = [];
   let currentElfCalories = 0;
 
-  const fileIterator = getFileIterator('day-1/input.txt');
+  const fileIterator = getFileIterator(INPUT_FILE_PATH);
 
   for await (const line of fileIterator) {
     // count calories for the current elf
