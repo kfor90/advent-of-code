@@ -1,19 +1,4 @@
-import * as fs from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import * as readline from 'node:readline';
-import { fileURLToPath } from 'node:url';
-
-const getFileIterator = () => {
-  const __dirname = dirname(fileURLToPath(import.meta.url));
-  const filePath = resolve(__dirname, 'input.txt');
-
-  const fileStream = fs.createReadStream(filePath);
-  const rl = readline.createInterface({
-    input: fileStream,
-  });
-
-  return rl;
-};
+import { getFileIterator } from '../shared/index.js';
 
 const elfHasMoreCaloriesThanTopElves = (elfCalories: number, caloriesByTopElves: number[]) => {
   return elfCalories > caloriesByTopElves[0];
@@ -34,7 +19,7 @@ const isEndOfElf = (line: string) => {
 const calcMostCaloriesByAnElf = async () => {
   let mostCaloriesByElf = 0;
   let currentElfCalories = 0;
-  const fileIterator = getFileIterator();
+  const fileIterator = getFileIterator('day-1/input.txt');
 
   for await (const line of fileIterator) {
     // count calories for the current elf
@@ -56,7 +41,7 @@ const calcMostCaloriesByTopElves = async (numTopElves: number) => {
   const totalCaloriesByTopElves: number[] = [];
   let currentElfCalories = 0;
 
-  const fileIterator = getFileIterator();
+  const fileIterator = getFileIterator('day-1/input.txt');
 
   for await (const line of fileIterator) {
     // count calories for the current elf
