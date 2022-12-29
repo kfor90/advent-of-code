@@ -8,25 +8,25 @@ interface Pair {
 }
 
 interface PairSet {
-  pair1: Pair;
-  pair2: Pair;
+  pairA: Pair;
+  pairB: Pair;
 }
 
-const getPairs = (line: string): PairSet => {
-  const [pair1, pair2] = line.split(',');
-  const [pair1min, pair1max] = pair1.split('-');
-  const [pair2min, pair2max] = pair2.split('-');
+const getPairs = (line: string) => {
+  const [pairA, pairB] = line.split(',');
+  const [pairAMin, pairAMax] = pairA.split('-');
+  const [pairBMin, pairBMax] = pairB.split('-');
 
   return {
-    pair1: {
-      min: +pair1min,
-      max: +pair1max,
+    pairA: {
+      min: +pairAMin,
+      max: +pairAMax,
     },
-    pair2: {
-      min: +pair2min,
-      max: +pair2max,
+    pairB: {
+      min: +pairBMin,
+      max: +pairBMax,
     },
-  };
+  } as PairSet;
 };
 
 const doesPairAContainPairB = (pairA: Pair, pairB: Pair) => {
@@ -35,11 +35,40 @@ const doesPairAContainPairB = (pairA: Pair, pairB: Pair) => {
   return false;
 };
 
-const doPairsOverlap = (pair1: Pair, pair2: Pair) => {
-  if (doesPairAContainPairB(pair1, pair2)) return true;
-  if (doesPairAContainPairB(pair2, pair1)) return true;
+const doesPairAOverlapPairB = (pairA: Pair, pairB: Pair) => {
+  // pairAMin is contained within pairB
+  if (pairA.min >= pairB.min && pairA.min <= pairB.max) return true;
+
+  // pairAMax is contained within pairB
+  if (pairA.max <= pairB.max && pairA.max >= pairB.min) return true;
 
   return false;
+};
+
+const doPairsFullyOverlap = (pairA: Pair, pairB: Pair) => {
+  if (doesPairAContainPairB(pairA, pairB)) return true;
+  if (doesPairAContainPairB(pairB, pairA)) return true;
+
+  return false;
+};
+
+const doPairsOverlap = (pairA: Pair, pairB: Pair) => {
+  if (doesPairAOverlapPairB(pairA, pairB)) return true;
+  if (doesPairAOverlapPairB(pairB, pairA)) return true;
+
+  return false;
+};
+
+const calcNumFullPairOverlaps = async () => {
+  const fileIterator = getFileIterator(INPUT_FILE_PATH);
+  let numFullPairOverlaps = 0;
+
+  for await (const line of fileIterator) {
+    const { pairA, pairB } = getPairs(line);
+    if (doPairsFullyOverlap(pairA, pairB)) numFullPairOverlaps++;
+  }
+
+  return numFullPairOverlaps;
 };
 
 const calcNumPairOverlaps = async () => {
@@ -47,17 +76,17 @@ const calcNumPairOverlaps = async () => {
   let numPairOverlaps = 0;
 
   for await (const line of fileIterator) {
-    const { pair1, pair2 } = getPairs(line);
-    if (doPairsOverlap(pair1, pair2)) numPairOverlaps++;
+    const { pairA, pairB } = getPairs(line);
+    if (doPairsOverlap(pairA, pairB)) numPairOverlaps++;
   }
 
   return numPairOverlaps;
 };
 
 export const part1 = () => {
-  return calcNumPairOverlaps();
+  return calcNumFullPairOverlaps();
 };
 
 export const part2 = () => {
-  // return calculatePrioritySumOfElfGroup(3);
+  return calcNumPairOverlaps();
 };

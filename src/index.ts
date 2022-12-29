@@ -13,4 +13,4 @@ console.log(`Day 3 - Part 1/2: ${await day3.part1()}`);
 console.log(`Day 3 - Part 2/2: ${await day3.part2()}`);
 
 console.log(`Day 4 - Part 1/2: ${await day4.part1()}`);
-// console.log(`Day 3 - Part 2/2: ${await day3.part2()}`);
+console.log(`Day 4 - Part 2/2: ${await day4.part2()}`);
